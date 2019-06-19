@@ -4,27 +4,25 @@ $(document).ready(function () {
 
   $('form').submit(event => {
     event.preventDefault();
-    const num = parseInt($("input[type=number]").val());
-    getDogImages(num);
+    let breed = $("input[type=text]").val();
+    getDogImage(breed.toLowerCase());
   });
 
-  function getDogImages(num) {
-    fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
+  function getDogImage(breed) {
+    fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
       .then(response => response.json())
-      .then(responseJson => displayResults(responseJson));
+      .then(responseJson => displayResults(responseJson))
+      .catch(error => alert('Sorry, no pictures for that breed. Please choose another.'));
   }
 
   function displayResults(responseJson) {
     console.log(responseJson);
     removeCurrentImages();
 
-    let count = responseJson.message.length;
-    for (let i = 0; i < count; i++) {
+    $('.image_container').append(
+      `<img src="${responseJson.message}" class="dog_image" alt="dog image">`
+    );
 
-      $('.image_container').append(
-        `<img src="${responseJson.message[i]}" class="dog_image" alt="dog image">`
-      );
-    }
     $('section').removeClass('hidden');
   }
 
