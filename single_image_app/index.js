@@ -12,21 +12,28 @@ $(document).ready(function () {
     fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
       .then(response => response.json())
       .then(responseJson => displayResults(responseJson))
-      .catch(error => alert('Sorry, no pictures for that breed. Please choose another.'));
+      .catch(error => errorAlert());
   }
 
   function displayResults(responseJson) {
     console.log(responseJson);
-    removeCurrentImages();
+    removeCurrentImage();
 
-    $('.image_container').append(
-      `<img src="${responseJson.message}" class="dog_image" alt="dog image">`
-    );
-
-    $('section').removeClass('hidden');
+    if (responseJson.status === "success") {
+      $('.image_container').append(
+        `<img src="${responseJson.message}" class="dog_image" alt="dog image">`
+      );
+      $('section').removeClass('hidden');
+    } else {
+      errorAlert();
+    }
   }
 
-  function removeCurrentImages() {
+  function removeCurrentImage() {
     $('.image_container').empty();
+  }
+
+  function errorAlert() {
+    alert('Sorry, no pictures for that breed. Please choose another.');
   }
 });
