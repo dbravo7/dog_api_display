@@ -11,9 +11,20 @@
 </head>
 <body>
   <header>
-    <h1></h1>
+    <h1>Dog Collection</h1>
   </header>
 
-  <script src="index.js"></script>
+  <form>
+    <label>Choose a number between 3 and 50</label>
+    <input type="number" name="number" min="3" max="50" value="3">
+    <input type="submit">
+  </form>
+  <section class="hidden">
+    <header>
+      <h2>Your dog images</h2>
+    </header>
+    <div class="image_container"></div>
+  </section>
+  <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
